@@ -1,10 +1,10 @@
 package main
 
 import (
-	"electricaltools/internal/data"
 	"fmt"
 	"net/http"
-	"encoding/json"
+	"electricaltools/internal/data"
+	"electricaltools/internal/validator"
 )
 
 
@@ -19,11 +19,27 @@ func (app *application) createDrillHandler(w http.ResponseWriter, r *http.Reques
 		ChuckDiameter int32 `json: "diameter"`
 	}
 	
-	err := json.NewDecoder(r.Body).Decode(&input)
+	err := app.readJSON(w, r, &input)
 	if err != nil {
-		app.errorResponse(w, r, http.StatusBadRequest, err.Error())
+		app.badRequestResponse(w, r, err)
 		return
 	}
+
+	drill := &data.Drill{
+		ID: input.ID,
+		Weight: input.Weight,
+		Name: input.Name,
+		CableLength: input.CableLength,
+		Worktime: input.Worktime,
+		ChuckDiameter: input.ChuckDiameter,
+	}
+
+	v := validator.New()
+
+	if data.ValidateDrill(v, drill); !v.Valid() {
+		app.failedValidationResponse(w, r, v.Errors)
+		return
+		}
 	
 	fmt.Fprintf(w, "%+v\n", input)
 }
