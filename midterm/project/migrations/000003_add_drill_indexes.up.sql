@@ -1,0 +1,2 @@
+CREATE INDEX IF NOT EXISTS drill_weight_idx ON security_cameras USING GIN (to_tsvector('simple', weight));
+CREATE INDEX IF NOT EXISTS drill_name_idx ON security_cameras USING GIN (to_tsvector('simple', name));

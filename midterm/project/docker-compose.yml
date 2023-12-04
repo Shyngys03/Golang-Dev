@@ -1,0 +1,26 @@
+# Use postgres/example user/password credentials 
+version: '3.1'
+
+services:
+
+  project:
+    build: .
+    depends_on:
+      - db
+    environment:
+      ELECTRICALTOOLS: "postgres://electricaltools:pa55word@localhost/electricaltools?sslmode=disable"
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: electricaltools
+      POSTGRES_DB: electricaltools
+      POSTGRES_PASSWORD: pa55word
+
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

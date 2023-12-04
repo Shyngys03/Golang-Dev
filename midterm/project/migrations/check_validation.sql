@@ -1,1 +1,0 @@
-ALTER TABLE movies ADD CONSTRAINT drills_weight_check CHECK (weigth >= 0);
