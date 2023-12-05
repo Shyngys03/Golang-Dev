@@ -50,7 +50,7 @@ func (app *application) registerUserHandler(w http.ResponseWriter, r *http.Reque
 		}
 		return
 	}
-	err = app.models.Permissions.AddForUser(user.ID, "security_cameras:read")
+	err = app.models.Permissions.AddForUser(user.ID, "drills:read")
 	if err != nil {
 		app.serverErrorResponse(w, r, err)
 		return
