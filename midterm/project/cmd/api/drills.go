@@ -10,11 +10,11 @@ import (
 
 func (app *application) createDrillHandler(w http.ResponseWriter, r *http.Request) {
 	var input struct {
-		Weight float32		`json: "weight"`
-		Name string			`json: "name"`
-		CableLength float32 `json: "length"`
-		Worktime int32 		`json: "worktime"`
-		ChuckDiameter int32 `json: "diameter"`
+		Weight float32		`json:"weight"`
+		Name string			`json:"name"`
+		CableLength float32 `json:"length"`
+		Worktime int32 		`json:"worktime"`
+		ChuckDiameter int32 `json:"diameter"`
 	}
 
 	err := app.readJSON(w, r, &input)
@@ -95,11 +95,11 @@ func (app *application) updateDrillHandler(w http.ResponseWriter, r *http.Reques
 		return
 	}
 	var input struct {
-		Weight *float32		`json: "weight"`
-		Name *string			`json: "name"`
-		CableLength *float32 `json: "length"`
-		Worktime *int32 		`json: "worktime"`
-		ChuckDiameter *int32 `json: "diameter"`
+		Weight *float32		`json:"weight"`
+		Name *string			`json:"name"`
+		CableLength *float32 `json:"length"`
+		Worktime *int32 		`json:"worktime"`
+		ChuckDiameter *int32 `json:"diameter"`
 	}
 
 	err = app.readJSON(w, r, &input)
