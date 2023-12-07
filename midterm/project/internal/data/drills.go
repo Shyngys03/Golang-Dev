@@ -156,10 +156,10 @@ func (d DrillModel) Delete(id int64) error {
 func (d DrillModel) GetAll(weight float32, name string, filters Filters) ([]*Drill, Metadata, error) {
 
 	query := fmt.Sprintf(`
-		SELECT count(*) OVER(), id, weight, naem, cable_length, work_time, chuck_diameter 
-		FROM drills
-		WHERE (to_tsvector('simple', weight) @@ plainto_tsquery('simple', $1) OR $1 = '')
-		AND (to_tsvector('simple', name) @@ plainto_tsquery('simple', $2) OR $2 = '')
+		SELECT count(*) OVER(), id, weight, name, cable_length, work_time, chuck_diameter 
+		FROM movies
+		WHERE (to_tsvector('simple', title) @@ plainto_tsquery('simple', $1) OR $1 = '')
+		AND (weight @> $2 OR $2 = '{}')
 		ORDER BY %s %s, id ASC
 		LIMIT $3 OFFSET $4`, filters.sortColumn(), filters.sortDirection())
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
